@@ -320,7 +320,6 @@ public class PlaywrightLocatorsTest {
             page.getByTestId("search-query").fill("Pliers");
             page.getByTestId("search-submit").click();
         }
-
     }
 
     @DisplayName("Nested locators")
