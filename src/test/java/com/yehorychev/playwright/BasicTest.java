@@ -3,31 +3,39 @@ package com.yehorychev.playwright;
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.Playwright;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class BasicTest {
+    Playwright playwright;
+    Browser browser;
+    Page page;
 
-    @Test
-    void shouldShowThePageTitle() {
-        Playwright playwright = Playwright.create();
-        Browser browser = playwright.chromium().launch();
-        Page page = browser.newPage();
+    @BeforeEach
+    void setup() {
+        playwright = Playwright.create();
+        browser = playwright.chromium().launch();
+        page = browser.newPage();
+    }
 
-        page.navigate("https://practicesoftwaretesting.com/");
-        String pageTitle = page.title();
-
-        Assertions.assertTrue(pageTitle.contains("Practice Software Testing"));
-
+    @AfterEach
+    void tearDown() {
         browser.close();
         playwright.close();
     }
 
-    void shouldSearchByKeyword() {
-        Playwright playwright = Playwright.create();
-        Browser browser = playwright.chromium().launch();
-        Page page = browser.newPage();
+    @Test
+    void shouldShowThePageTitle() {
+        page.navigate("https://practicesoftwaretesting.com/");
+        String pageTitle = page.title();
 
+        Assertions.assertTrue(pageTitle.contains("Practice Software Testing"));
+    }
+
+    @Test
+    void shouldSearchByKeyword() {
         page.navigate("https://practicesoftwaretesting.com/");
         page.locator("//input[@id='search-query']").fill("Pliers");
         page.locator("//button[@class='btn btn-secondary']").click();
@@ -35,8 +43,5 @@ public class BasicTest {
         int matchingSearchResults = page.locator("//*[contains(text(),'Pliers')]").count();
 
         Assertions.assertTrue(matchingSearchResults > 0);
-
-        browser.close();
-        playwright.close();
     }
 }
