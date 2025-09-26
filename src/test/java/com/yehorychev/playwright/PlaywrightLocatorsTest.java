@@ -162,7 +162,6 @@ public class PlaywrightLocatorsTest {
         void byButton() {
             page.navigate("https://practicesoftwaretesting.com/contact");
 
-
             page.getByRole(AriaRole.BUTTON,
                             new Page.GetByRoleOptions().setName("Send"))
                     .click();
