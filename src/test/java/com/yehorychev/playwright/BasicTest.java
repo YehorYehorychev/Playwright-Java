@@ -1,24 +1,42 @@
 package com.yehorychev.playwright;
 
+import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
+import com.microsoft.playwright.junit.Options;
+import com.microsoft.playwright.junit.OptionsFactory;
 import com.microsoft.playwright.junit.UsePlaywright;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-@UsePlaywright
+import java.util.Arrays;
+
+@UsePlaywright(BasicTest.MyOptions.class)
 public class BasicTest {
+
+    public static class MyOptions implements OptionsFactory {
+
+        @Override
+        public Options getOptions() {
+            return new Options()
+                    .setBrowserName("chromium")
+                    .setHeadless(false)
+                    .setBaseUrl("https://practicesoftwaretesting.com")
+                    .setLaunchOptions(new BrowserType.LaunchOptions()
+                            .setArgs(Arrays.asList("--no-sandbox", "--disable-gpu"))
+                    );
+        }
+    }
 
     @Test
     void shouldShowThePageTitle(Page page) {
-        page.navigate("https://practicesoftwaretesting.com/");
+        page.navigate("/");
         String pageTitle = page.title();
-
         Assertions.assertTrue(pageTitle.contains("Practice Software Testing"));
     }
 
     @Test
     void shouldSearchByKeyword(Page page) {
-        page.navigate("https://practicesoftwaretesting.com/");
+        page.navigate("/");
         page.locator("//input[@id='search-query']").fill("Pliers");
         page.locator("//button[@class='btn btn-secondary']").click();
 
@@ -27,7 +45,7 @@ public class BasicTest {
         Assertions.assertTrue(matchingSearchResults > 0);
     }
 
-    // Legacy fixtures BEFORE -> @UsePlaywright
+    // How the fixtures look before -> @UsePlaywright impl
     /*
     Playwright playwright;
     Browser browser;
