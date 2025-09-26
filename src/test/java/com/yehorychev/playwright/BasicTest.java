@@ -44,24 +44,4 @@ public class BasicTest {
 
         Assertions.assertTrue(matchingSearchResults > 0);
     }
-
-    // How the fixtures look before -> @UsePlaywright impl
-    /*
-    Playwright playwright;
-    Browser browser;
-    Page page;
-
-    @BeforeEach
-    void setup() {
-        playwright = Playwright.create();
-        browser = playwright.chromium().launch();
-        page = browser.newPage();
-    }
-
-    @AfterEach
-    void tearDown() {
-        browser.close();
-        playwright.close();
-    }
-    */
 }
