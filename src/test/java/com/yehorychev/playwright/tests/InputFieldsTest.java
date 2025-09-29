@@ -1,8 +1,9 @@
-package com.yehorychev.playwright;
+package com.yehorychev.playwright.tests;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.junit.UsePlaywright;
 import com.microsoft.playwright.options.AriaRole;
+import com.yehorychev.playwright.HeadlessChromeOptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -90,6 +91,26 @@ public class InputFieldsTest {
 
             var errorMsg = page.getByRole(AriaRole.ALERT).getByText(fieldName + " is required");
             assertThat(errorMsg).isVisible();
+        }
+
+        @DisplayName("Making assertions about the contents of a field")
+        @Test
+        void fieldValuesTest(Page page) {
+            var firstNameField = page.getByLabel("First name");
+            var lastNameField = page.getByLabel("Last name");
+            var emailField = page.getByLabel("Email address");
+
+            firstNameField.fill("Yehor");
+            lastNameField.fill("Yehorychev");
+            emailField.fill("yehor@example.com");
+
+            assertThat(firstNameField).isVisible();
+            assertThat(lastNameField).isVisible();
+            assertThat(emailField).not().containsText("gmail.com");
+
+            assertThat(firstNameField).hasValue("Yehor");
+            assertThat(lastNameField).hasValue("Yehorychev");
+            assertThat(emailField).hasValue("yehor@example.com");
         }
     }
 }
