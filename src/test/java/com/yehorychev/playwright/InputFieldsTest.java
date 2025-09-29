@@ -2,6 +2,7 @@ package com.yehorychev.playwright;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.junit.UsePlaywright;
+import com.microsoft.playwright.options.AriaRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -55,6 +56,23 @@ public class InputFieldsTest {
             String uploadedFile = uploadField.inputValue();
             org.assertj.core.api.Assertions.assertThat(uploadedFile)
                     .endsWith("upload_file_test.txt");
+        }
+
+        @DisplayName("Mandatory Fields")
+        @Test
+        void mandatoryFieldsTest(Page page) {
+            var firstNameField = page.getByLabel("First name");
+            var lastNameField = page.getByLabel("Last name");
+            var emailField = page.getByLabel("Email address");
+            var messageField = page.getByLabel("Message *");
+            var subjectSelector = page.getByLabel("Subject");
+            var uploadField = page.getByLabel("Attachment");
+            var sendBtn = page.getByText("Send");
+
+            sendBtn.click();
+
+            var errorMsg = page.getByRole(AriaRole.ALERT).getByText("First name is required");
+            assertThat(errorMsg).isVisible();
         }
     }
 }
