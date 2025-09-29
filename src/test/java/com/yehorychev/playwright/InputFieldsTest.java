@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -59,8 +61,9 @@ public class InputFieldsTest {
         }
 
         @DisplayName("Mandatory Fields")
-        @Test
-        void mandatoryFieldsTest(Page page) {
+        @ParameterizedTest
+        @ValueSource(strings = {"First Name", "Last Name", "Email", "Message"})
+        void mandatoryFieldsTest(String fieldName, Page page) {
             var firstNameField = page.getByLabel("First name");
             var lastNameField = page.getByLabel("Last name");
             var emailField = page.getByLabel("Email address");
@@ -69,9 +72,23 @@ public class InputFieldsTest {
             var uploadField = page.getByLabel("Attachment");
             var sendBtn = page.getByText("Send");
 
+            firstNameField.fill("Yehor");
+            lastNameField.fill("Yehorychev");
+            emailField.fill("yehor@example.com");
+            messageField.fill("Hello World!");
+            subjectSelector.selectOption("payments");
+
+            assertThat(firstNameField).hasValue("Yehor");
+            assertThat(lastNameField).hasValue("Yehorychev");
+            assertThat(emailField).hasValue("yehor@example.com");
+            assertThat(messageField).hasValue("Hello World!");
+            assertThat(subjectSelector).hasValue("payments");
+
+            page.getByLabel(fieldName).clear();
+
             sendBtn.click();
 
-            var errorMsg = page.getByRole(AriaRole.ALERT).getByText("First name is required");
+            var errorMsg = page.getByRole(AriaRole.ALERT).getByText(fieldName + " is required");
             assertThat(errorMsg).isVisible();
         }
     }
