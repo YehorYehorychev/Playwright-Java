@@ -47,6 +47,8 @@ public class WaitsTest {
 
     @Nested
     class WaitingForState {
+
+        // Our wait | Waiting for images on the screen
         @BeforeEach
         void openHomePage() {
             page.navigate("https://practicesoftwaretesting.com");
@@ -54,14 +56,19 @@ public class WaitsTest {
         }
 
         @Test
-        void shouldShowAllProductNames() {
+        void shouldShowAllProductNamesTest() {
             List<String> productNames = page.getByTestId("product-name").allInnerTexts();
             Assertions.assertThat(productNames).contains("Pliers", "Bolt Cutters", "Hammer");
         }
 
         @Test
-        void shouldShowAllProductImages() {
+        void shouldShowAllProductImagesTest() {
+            List<String> productImageTitles = page.locator(".card-img-top").all()
+                    .stream()
+                    .map(img -> img.getAttribute("alt"))
+                    .toList();
 
+            Assertions.assertThat(productImageTitles).contains("Pliers", "Bolt Cutters", "Hammer");
         }
     }
 }
