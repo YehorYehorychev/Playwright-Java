@@ -1,4 +1,4 @@
-package com.yehorychev.playwright;
+package com.yehorychev.playwright.tests;
 
 import com.microsoft.playwright.BrowserType;
 import com.microsoft.playwright.Page;
