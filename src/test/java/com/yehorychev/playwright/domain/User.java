@@ -1,7 +1,6 @@
 package com.yehorychev.playwright.domain;
 
 import net.datafaker.Faker;
-import net.datafaker.providers.base.Address;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
