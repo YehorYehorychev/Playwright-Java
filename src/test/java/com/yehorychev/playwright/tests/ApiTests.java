@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
 @Execution(ExecutionMode.SAME_THREAD)
-public class APITests {
+public class ApiTests {
 
     protected static Playwright playwright;
     protected static Browser browser;
@@ -103,8 +103,7 @@ public class APITests {
     @Nested
     class MakingAPICalls {
 
-        record Product(String name, Double price) {
-        }
+        record Product(String name, Double price) {}
 
         private static APIRequestContext requestContext;
 
