@@ -172,8 +172,6 @@ public class WaitsTest {
                     () -> page.getByTestId("sort").selectOption("Price (High - Low)")
             );
 
-            page.locator("[data-testid='product-price']").first().waitFor();
-
             // Find all the prices on the page
             var productPrices = page.getByTestId("product-price")
                     .allInnerTexts()
