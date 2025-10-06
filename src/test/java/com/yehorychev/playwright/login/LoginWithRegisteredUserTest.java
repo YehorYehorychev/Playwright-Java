@@ -13,6 +13,7 @@ public class LoginWithRegisteredUserTest extends PlaywrightTestCase {
     @DisplayName("Should be able to login with a registered user")
     void shouldLoginWithRegisteredUser() {
         User user = User.randomUser();
+        UserApiClient userAPIClient = new UserApiClient(page);
 
         LoginPage loginPage = new LoginPage(page);
         loginPage.open();
