@@ -13,12 +13,27 @@ public class LoginWithRegisteredUserTest extends PlaywrightTestCase {
     @DisplayName("Should be able to login with a registered user")
     void shouldLoginWithRegisteredUser() {
         User user = User.randomUser();
-        UserApiClient userAPIClient = new UserApiClient(page);
+        UserApiClient userApiClient = new UserApiClient(page);
+        userApiClient.registerUser(user);
 
         LoginPage loginPage = new LoginPage(page);
         loginPage.open();
         loginPage.loginAs(user);
 
         assertThat(loginPage.title()).isEqualTo("My account");
+    }
+
+    @Test
+    @DisplayName("Should reject a user if they provide a wrong password")
+    void shouldRejectUserWithInvalidPassword() {
+        User user = User.randomUser();
+        UserApiClient userApiClient = new UserApiClient(page);
+        userApiClient.registerUser(user);
+
+        LoginPage loginPage = new LoginPage(page);
+        loginPage.open();
+        loginPage.loginAs(user.withPassword("wrong-password"));
+
+        assertThat(loginPage.loginErrorMessage()).isEqualTo("Invalid email or password");
     }
 }
