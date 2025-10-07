@@ -176,7 +176,6 @@ public class PlaywrightPageObjectTest {
                         Assertions.assertThat(item.total()).isGreaterThan(0.0);
                         Assertions.assertThat(item.total()).isEqualTo(item.quantity() * item.price());
                     });
-
         }
     }
 
