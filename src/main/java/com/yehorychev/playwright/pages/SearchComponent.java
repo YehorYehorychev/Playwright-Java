@@ -1,4 +1,4 @@
-package yehorychev.playwright.pages;
+package com.yehorychev.playwright.pages;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
