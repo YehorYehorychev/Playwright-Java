@@ -11,12 +11,10 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <!-- Java -->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <!-- Versions -->
         <allure.version>2.30.0</allure.version>
         <aspectj.version>1.9.22</aspectj.version>
 
@@ -75,30 +73,26 @@
 
     <build>
         <plugins>
-            <!-- Compiler -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
                 <configuration>
-                    <compilerArgs>
-                        <arg>-parameters</arg>
-                    </compilerArgs>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
 
-            <!-- Surefire (unit tests) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.plugin.version}</version>
                 <configuration>
-                    <skipTests>false</skipTests>
                     <useModulePath>false</useModulePath>
                 </configuration>
             </plugin>
 
-            <!-- Failsafe (integration tests) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
@@ -107,10 +101,6 @@
                     <argLine>
                         -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
                     </argLine>
-                    <includes>
-                        <include>**/*Test.java</include>
-                        <include>**/*Tests.java</include>
-                    </includes>
                 </configuration>
                 <executions>
                     <execution>
@@ -122,7 +112,6 @@
                 </executions>
             </plugin>
 
-            <!-- Allure Maven -->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
@@ -130,11 +119,12 @@
                 <configuration>
                     <reportVersion>${allure.version}</reportVersion>
                     <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+                    <reportDirectory>${project.build.directory}/site/allure-maven-plugin</reportDirectory>
                 </configuration>
                 <executions>
                     <execution>
                         <id>allure-report</id>
-                        <phase>post-integration-test</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
