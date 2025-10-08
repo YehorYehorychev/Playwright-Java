@@ -1,5 +1,6 @@
 package com.yehorychev.playwright.toolshop;
 
+import com.yehorychev.playwright.toolshop.fixtures.BaseToolShopTest;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -16,4 +16,8 @@ public class NavBar {
     public void openHomePage() {
         page.navigate("https://practicesoftwaretesting.com");
     }
+
+    public void toTheContactPage() {
+        page.navigate("https://practicesoftwaretesting.com/contact");
+    }
 }
