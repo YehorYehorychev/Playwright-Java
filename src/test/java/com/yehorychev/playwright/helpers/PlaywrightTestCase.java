@@ -26,7 +26,6 @@ public abstract class PlaywrightTestCase {
     );
 
     protected BrowserContext browserContext;
-
     protected Page page;
 
     @BeforeEach
