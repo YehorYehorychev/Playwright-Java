@@ -3,6 +3,7 @@ package com.yehorychev.playwright.pages;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import io.qameta.allure.Step;
 
 import java.nio.file.Path;
 
@@ -49,14 +50,17 @@ public class ContactForm {
         page.setInputFiles("#attachment", fileToUpload);
     }
 
+    @Step("Submit form")
     public void submitForm() {
         sendButton.click();
     }
 
+    @Step("Get alert message")
     public String getAlertMessage() {
         return page.getByRole(AriaRole.ALERT).textContent();
     }
 
+    @Step("Clear the field")
     public void clearField(String fieldName) {
         page.getByLabel(fieldName).clear();
     }
