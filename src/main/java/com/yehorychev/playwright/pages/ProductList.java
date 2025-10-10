@@ -12,7 +12,7 @@ public class ProductList {
         this.page = page;
     }
 
-    @Step("Get product name")
+    @Step("Get product names")
     public List<String> getProductNames() {
         return page.getByTestId("product-name").allInnerTexts();
     }

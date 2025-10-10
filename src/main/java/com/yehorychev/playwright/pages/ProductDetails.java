@@ -11,6 +11,7 @@ public class ProductDetails {
         this.page = page;
     }
 
+    @Step("Increment the quantity")
     public void increaseQuanityBy(int increment) {
         for (int i = 1; i <= increment; i++) {
             page.getByTestId("increase-quantity").click();
