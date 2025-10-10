@@ -1,8 +1,15 @@
 package com.yehorychev.cucumber.stepdefinitions;
 
+import com.yehorychev.playwright.pages.NavBar;
+import com.yehorychev.playwright.pages.ProductList;
+import com.yehorychev.playwright.pages.SearchComponent;
 import io.cucumber.java.en.*;
 
 public class ProductCatalogStepDefinitions {
+
+    NavBar navBar;
+    SearchComponent searchComponent;
+    ProductList productList;
 
     @Given("Sally is on the home page")
     public void sally_is_on_the_home_page() {
