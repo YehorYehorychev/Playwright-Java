@@ -4,6 +4,8 @@ import com.microsoft.playwright.options.AriaRole;
 import com.yehorychev.playwright.pages.ContactForm;
 import com.yehorychev.playwright.pages.NavBar;
 import com.yehorychev.playwright.toolshop.fixtures.BaseToolShopTest;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,7 +19,7 @@ import java.nio.file.Paths;
 
 import static com.microsoft.playwright.assertions.PlaywrightAssertions.assertThat;
 
-@DisplayName("Contact form")
+@Feature("Contact form")
 public class ContactFormTest extends BaseToolShopTest {
 
     ContactForm contactForm;
@@ -31,6 +33,7 @@ public class ContactFormTest extends BaseToolShopTest {
     }
 
     @DisplayName("Customers can use the contact form to contact us")
+    @Story("Fill the whole form on the contact us screen")
     @Test
     void completeForm() throws URISyntaxException {
         contactForm.setFirstName("Sarah-Jane");
@@ -48,6 +51,7 @@ public class ContactFormTest extends BaseToolShopTest {
                 .contains("Thanks for your message! We will contact you shortly.");
     }
 
+    @Story("Mandatory field on the contact us screen")
     @DisplayName("First name, last name, email and message are mandatory")
     @ParameterizedTest(name = "{arguments} is a mandatory field")
     @ValueSource(strings = {"First name", "Last name", "Email", "Message"})
@@ -69,6 +73,7 @@ public class ContactFormTest extends BaseToolShopTest {
                 .isVisible();
     }
 
+    @Story("Short message on the contact us screen")
     @DisplayName("The message must be at least 50 characters long")
     @Test
     void messageTooShort() {
@@ -84,6 +89,7 @@ public class ContactFormTest extends BaseToolShopTest {
         assertThat(page.getByRole(AriaRole.ALERT)).hasText("Message must be minimal 50 characters");
     }
 
+    @Story("Invalid email on the contact us screen")
     @DisplayName("The email address must be correctly formatted")
     @ParameterizedTest(name = "'{arguments}' should be rejected")
     @ValueSource(strings = {"not-an-email", "not-an.email.com", "notanemail"})

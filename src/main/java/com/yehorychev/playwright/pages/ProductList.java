@@ -1,6 +1,7 @@
 package com.yehorychev.playwright.pages;
 
 import com.microsoft.playwright.Page;
+import com.yehorychev.playwright.utils.ScreenshotManager;
 import io.qameta.allure.Step;
 
 import java.util.List;
@@ -20,5 +21,6 @@ public class ProductList {
     @Step("View product details")
     public void viewProductDetails(String productName) {
         page.locator(".card").getByText(productName).click();
+        ScreenshotManager.takeScreenshot(page, "View product details");
     }
 }

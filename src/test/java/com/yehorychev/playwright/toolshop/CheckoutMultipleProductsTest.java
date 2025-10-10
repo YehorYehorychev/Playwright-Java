@@ -2,15 +2,19 @@ package com.yehorychev.playwright.toolshop;
 
 import com.yehorychev.playwright.pages.CartLineItem;
 import com.yehorychev.playwright.toolshop.fixtures.BaseToolShopTest;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+@Feature("Multiple products in the shopping cart")
 public class CheckoutMultipleProductsTest extends BaseToolShopTest {
 
     @Test
+    @Story("Checkout a multiple products")
     @DisplayName("Checkout multiple different products")
     void checkoutMultipleProducts() {
         // Add first product
