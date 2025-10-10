@@ -2,6 +2,7 @@ package com.yehorychev.playwright.pages;
 
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import com.yehorychev.playwright.utils.ScreenshotManager;
 import io.qameta.allure.Step;
 
 public class ProductDetails {
@@ -16,6 +17,7 @@ public class ProductDetails {
         for (int i = 1; i <= increment; i++) {
             page.getByTestId("increase-quantity").click();
         }
+        ScreenshotManager.takeScreenshot(page, "Increment the quantity");
     }
 
     @Step("Add to cart")
@@ -27,5 +29,6 @@ public class ProductDetails {
                     page.getByRole(AriaRole.ALERT).click();
                 }
         );
+        ScreenshotManager.takeScreenshot(page, "Add to cart");
     }
 }

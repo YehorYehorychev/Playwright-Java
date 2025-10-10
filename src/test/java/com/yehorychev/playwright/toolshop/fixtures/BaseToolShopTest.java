@@ -1,6 +1,7 @@
 package com.yehorychev.playwright.toolshop.fixtures;
 
 import com.microsoft.playwright.*;
+import com.yehorychev.playwright.utils.ScreenshotManager;
 import com.yehorychev.playwright.pages.*;
 import org.junit.jupiter.api.*;
 
@@ -71,6 +72,7 @@ public abstract class BaseToolShopTest {
             } catch (PlaywrightException e) {
                 System.out.println("Trace could not be stopped: " + e.getMessage());
             }
+            ScreenshotManager.takeScreenshot(page, "Final screenshot");
             context.close();
         }
     }
