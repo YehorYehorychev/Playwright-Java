@@ -1,67 +1,59 @@
 package com.yehorychev.cucumber.fixtures;
 
 import com.microsoft.playwright.*;
-import io.cucumber.java.After;
-import io.cucumber.java.AfterAll;
-import io.cucumber.java.Before;
-import io.cucumber.java.Scenario;
+import io.cucumber.java.*;
 import io.qameta.allure.Allure;
 
 import java.io.ByteArrayInputStream;
 import java.util.Arrays;
 
-public abstract class Hooks {
+public class Hooks {
 
-    protected static ThreadLocal<Playwright> playwright
-            = ThreadLocal.withInitial(() -> {
-                Playwright playwright = Playwright.create();
-                playwright.selectors().setTestIdAttribute("data-test");
-                return playwright;
-            }
-    );
+    private static ThreadLocal<Playwright> playwright = ThreadLocal.withInitial(() -> {
+        Playwright pw = Playwright.create();
+        pw.selectors().setTestIdAttribute("data-test");
+        return pw;
+    });
 
-    protected static ThreadLocal<Browser> browser = ThreadLocal.withInitial(() ->
+    private static ThreadLocal<Browser> browser = ThreadLocal.withInitial(() ->
             playwright.get().chromium().launch(
                     new BrowserType.LaunchOptions()
-                            .setHeadless(true)
+                            .setHeadless(false)
                             .setArgs(Arrays.asList("--no-sandbox", "--disable-extensions", "--disable-gpu"))
             )
     );
 
-    private static final ThreadLocal<BrowserContext> browserContext = new ThreadLocal<>();
+    private static final ThreadLocal<BrowserContext> context = new ThreadLocal<>();
     private static final ThreadLocal<Page> page = new ThreadLocal<>();
 
-    @Before
-    public void setUpBrowserContext() {
-        browserContext.set(browser.get().newContext());
-        page.set(browserContext.get().newPage());
+    @Before(order = 0)
+    public void init() {
+        context.set(browser.get().newContext());
+        page.set(context.get().newPage());
     }
 
-    @After
-    public void closeContext(Scenario scenario) {
+    @After(order = 1)
+    public void tearDown(Scenario scenario) {
         if (scenario.isFailed()) {
             byte[] screenshot = page.get().screenshot(
                     new Page.ScreenshotOptions().setFullPage(true)
             );
             Allure.addAttachment("Failure Screenshot", new ByteArrayInputStream(screenshot));
         }
-        browserContext.get().close();
+        context.get().close();
     }
 
     @AfterAll
-    public static void tearDown() {
+    public static void closeAll() {
         browser.get().close();
-        browser.remove();
-
         playwright.get().close();
-        playwright.remove();
     }
 
     public static Page getPage() {
         return page.get();
     }
 
-    public static BrowserContext getBrowserContext() {
-        return browserContext.get();
+    public static BrowserContext getContext() {
+        return context.get();
     }
 }

@@ -34,7 +34,7 @@ public abstract class BaseToolShopTest {
     protected Page page;
 
     protected SearchComponent searchComponent;
-    protected ProductList productList;
+    protected ProductsList productList;
     protected ProductDetails productDetails;
     protected NavBar navBar;
     protected CheckoutCart checkoutCart;
@@ -53,7 +53,7 @@ public abstract class BaseToolShopTest {
         );
 
         searchComponent = new SearchComponent(page);
-        productList = new ProductList(page);
+        productList = new ProductsList(page);
         productDetails = new ProductDetails(page);
         navBar = new NavBar(page);
         checkoutCart = new CheckoutCart(page);
