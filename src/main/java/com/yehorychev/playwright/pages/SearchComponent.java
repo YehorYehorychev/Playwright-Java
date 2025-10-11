@@ -12,12 +12,14 @@ public class SearchComponent {
         this.page = page;
     }
 
-    @Step("Search for keyword")
+    @Step("Search for product: {keyword}")
     public void searchBy(String keyword) {
-        page.waitForResponse("**/products/search?q=" + keyword, () -> {
-            page.getByPlaceholder("Search").fill(keyword);
-            page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Search")).click();
-        });
-        ScreenshotManager.takeScreenshot(page, "Search for keyword");
+        page.getByPlaceholder("Search").fill(keyword);
+        ScreenshotManager.takeScreenshot(page, "Filled search field: " + keyword);
+
+        page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Search")).click();
+        page.waitForSelector("text=" + keyword);
+
+        ScreenshotManager.takeScreenshot(page, "Search results for: " + keyword);
     }
 }
