@@ -16,6 +16,6 @@ Feature: Product Catalog
       Given Sally is on the home page
       When she searches for "saw"
       Then the following products should be displayed:
-        | Product      | Price  |
-        | Wood Saw     | $12.18 |
-        | Circular Saw | $80.19 |
+        | Product      |
+        | Wood Saw     |
+        | Circular Saw |

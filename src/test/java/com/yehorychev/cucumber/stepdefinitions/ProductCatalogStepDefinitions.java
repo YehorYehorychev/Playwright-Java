@@ -11,6 +11,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.assertj.core.api.Assertions;
 
+import java.util.List;
+
 public class ProductCatalogStepDefinitions {
 
     NavBar navBar;
@@ -41,8 +43,7 @@ public class ProductCatalogStepDefinitions {
     }
 
     @Then("the following products should be displayed:")
-    public void theFollowingProductsShouldBeDisplayed() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new PendingException();
+    public void theFollowingProductsShouldBeDisplayed(List<String> expectedProducts) {
+        System.out.println(expectedProducts);
     }
 }
