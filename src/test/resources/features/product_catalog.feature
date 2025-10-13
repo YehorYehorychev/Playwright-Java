@@ -11,3 +11,11 @@ Feature: Product Catalog
       Given Sally is on the home page
       When she searches for "Adjustable Wrench"
       Then the "Adjustable Wrench" product should be displayed
+
+    Example: The one where Sally searches for a more general term
+      Given Sally is on the home page
+      When she searches for "saw"
+      Then the following products should be displayed:
+        | Product      | Price  |
+        | Wood Saw     | $12.18 |
+        | Circular Saw | $80.19 |

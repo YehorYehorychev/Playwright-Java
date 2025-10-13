@@ -5,6 +5,7 @@ import com.yehorychev.playwright.pages.NavBar;
 import com.yehorychev.playwright.pages.ProductsList;
 import com.yehorychev.playwright.pages.SearchComponent;
 import io.cucumber.java.Before;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -37,5 +38,11 @@ public class ProductCatalogStepDefinitions {
     public void the_product_should_be_displayed(String productName) {
         var matchingProducts = productList.getProductNames();
         Assertions.assertThat(matchingProducts).contains(productName);
+    }
+
+    @Then("the following products should be displayed:")
+    public void theFollowingProductsShouldBeDisplayed() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new PendingException();
     }
 }
