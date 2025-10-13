@@ -15,7 +15,7 @@ public class ProductsList {
 
     @Step("Get product names")
     public List<String> getProductNames() {
-        page.waitForSelector(".card-title >> text=Adjustable Wrench", new Page.WaitForSelectorOptions().setTimeout(10000));
+        page.waitForSelector(".card-title", new Page.WaitForSelectorOptions().setTimeout(10000));
 
         page.waitForTimeout(500);
 

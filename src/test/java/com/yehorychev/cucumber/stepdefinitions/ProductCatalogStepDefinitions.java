@@ -4,8 +4,8 @@ import com.yehorychev.cucumber.fixtures.Hooks;
 import com.yehorychev.playwright.pages.NavBar;
 import com.yehorychev.playwright.pages.ProductsList;
 import com.yehorychev.playwright.pages.SearchComponent;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.Before;
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -43,7 +43,12 @@ public class ProductCatalogStepDefinitions {
     }
 
     @Then("the following products should be displayed:")
-    public void theFollowingProductsShouldBeDisplayed(List<String> expectedProducts) {
-        System.out.println(expectedProducts);
+    public void theFollowingProductsShouldBeDisplayed(DataTable table) {
+        List<String> expectedProducts = table.asMaps().stream()
+                .map(row -> row.get("Product"))
+                .toList();
+
+        var matchingProducts = productList.getProductNames();
+        Assertions.assertThat(matchingProducts).containsAll(expectedProducts);
     }
 }

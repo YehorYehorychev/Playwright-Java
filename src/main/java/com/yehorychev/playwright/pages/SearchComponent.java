@@ -18,7 +18,8 @@ public class SearchComponent {
         ScreenshotManager.takeScreenshot(page, "Filled search field: " + keyword);
 
         page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Search")).click();
-        page.waitForSelector("text=" + keyword);
+        page.waitForSelector("text=Searched for:", new Page.WaitForSelectorOptions().setTimeout(10000));
+        page.waitForSelector("[data-test='product-name']", new Page.WaitForSelectorOptions().setTimeout(10000));
 
         ScreenshotManager.takeScreenshot(page, "Search results for: " + keyword);
     }
