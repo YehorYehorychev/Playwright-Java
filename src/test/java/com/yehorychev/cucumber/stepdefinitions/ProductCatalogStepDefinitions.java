@@ -5,9 +5,9 @@ import com.yehorychev.playwright.pages.NavBar;
 import com.yehorychev.playwright.pages.ProductSummary;
 import com.yehorychev.playwright.pages.ProductsList;
 import com.yehorychev.playwright.pages.SearchComponent;
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.Before;
 import io.cucumber.java.DataTableType;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -54,5 +54,33 @@ public class ProductCatalogStepDefinitions {
     public void theFollowingProductsShouldBeDisplayed(List<ProductSummary> expectedProducts) {
         List<ProductSummary> matchingProducts = productList.getProductSummaries();
         Assertions.assertThat(matchingProducts).containsExactlyInAnyOrderElementsOf(expectedProducts);
+    }
+
+    @Then("no products should be displayed")
+    public void noProductsShouldBeDisplayed() {
+        List<ProductSummary> matchingProducts = productList.getProductSummaries();
+        Assertions.assertThat(matchingProducts).isEmpty();
+    }
+
+    @And("the message {string} should be displayed")
+    public void theMessageShouldBeDisplayed(String messageText) {
+        String completionMessage = productList.getSearchCompletedMessage();
+        Assertions.assertThat(completionMessage).isEqualTo(messageText);
+    }
+
+    @And("she filters by {string}")
+    public void sheFiltersBy(String filterName) {
+        searchComponent.filterBy(filterName);
+    }
+
+    @When("she sorts by {string}")
+    public void sheSortsBy(String sortFilter) {
+        searchComponent.sortBy(sortFilter);
+    }
+
+    @Then("the first product displayed should be {string}")
+    public void theFirstProductDisplayedShouldBe(String firstProductName) {
+        List<String> productNames = productList.getProductNames();
+        Assertions.assertThat(productNames).startsWith(firstProductName);
     }
 }

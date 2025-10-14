@@ -23,4 +23,17 @@ public class SearchComponent {
 
         ScreenshotManager.takeScreenshot(page, "Search results for: " + keyword);
     }
+
+    public void filterBy(String filterName) {
+        page.waitForResponse("**/products?**by_category=**", () -> {
+            page.getByLabel(filterName).click();
+        });
+    }
+
+    public void sortBy(String sortFilter) {
+        page.waitForResponse("**/products**sort=**", () -> {
+            page.getByTestId("sort").selectOption(sortFilter);
+        });
+        page.waitForTimeout(250);
+    }
 }

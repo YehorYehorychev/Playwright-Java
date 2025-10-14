@@ -15,5 +15,4 @@ import org.junit.platform.suite.api.Suite;
                 "html:target/cucumber-reports/cucumber.html"
 )
 public class RunCucumberTest {
-
 }

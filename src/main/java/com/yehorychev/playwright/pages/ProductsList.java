@@ -45,4 +45,8 @@ public class ProductsList {
         page.locator(".card").getByText(productName).click();
         ScreenshotManager.takeScreenshot(page, "Opened product details: " + productName);
     }
+
+    public String getSearchCompletedMessage() {
+        return page.getByTestId("search_completed").textContent();
+    }
 }
