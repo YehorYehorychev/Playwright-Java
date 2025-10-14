@@ -2,16 +2,19 @@ package com.yehorychev.cucumber.stepdefinitions;
 
 import com.yehorychev.cucumber.fixtures.Hooks;
 import com.yehorychev.playwright.pages.NavBar;
+import com.yehorychev.playwright.pages.ProductSummary;
 import com.yehorychev.playwright.pages.ProductsList;
 import com.yehorychev.playwright.pages.SearchComponent;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.Before;
+import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.assertj.core.api.Assertions;
 
 import java.util.List;
+import java.util.Map;
 
 public class ProductCatalogStepDefinitions {
 
@@ -42,13 +45,14 @@ public class ProductCatalogStepDefinitions {
         Assertions.assertThat(matchingProducts).contains(productName);
     }
 
-    @Then("the following products should be displayed:")
-    public void theFollowingProductsShouldBeDisplayed(DataTable table) {
-        List<String> expectedProducts = table.asMaps().stream()
-                .map(row -> row.get("Product"))
-                .toList();
+    @DataTableType
+    public ProductSummary productSummaryRow(Map<String, String> productData) {
+        return new ProductSummary(productData.get("Product"), productData.get("Price"));
+    }
 
-        var matchingProducts = productList.getProductNames();
-        Assertions.assertThat(matchingProducts).containsAll(expectedProducts);
+    @Then("the following products should be displayed:")
+    public void theFollowingProductsShouldBeDisplayed(List<ProductSummary> expectedProducts) {
+        List<ProductSummary> matchingProducts = productList.getProductSummaries();
+        Assertions.assertThat(matchingProducts).containsExactlyInAnyOrderElementsOf(expectedProducts);
     }
 }
