@@ -29,3 +29,25 @@ jobs:
         with:
           java-version: '17'
           distribution: 'adopt'
+
+      # Step 3: Install Maven 3.9.9
+      - name: Setup Maven Action
+        uses: s4u/setup-maven-action@v1.7.0
+        with:
+          checkout-fetch-depth: 0
+          java-version: 17
+          java-distribution: temurin
+          maven-version: 3.9.9
+
+      # Step 4: Install playwright OS libraries
+      - name: Install Playwright dependencies
+        run: npx playwright install-deps
+
+      # Step 5: Cache Maven dependencies
+      - name: Cache Maven dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven
