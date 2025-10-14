@@ -1,0 +1,24 @@
+name: Playwright Tests
+
+# Trigger the workflow on every push to any branch
+on:
+  push:
+    branches:
+      - '**'  # Run on every branch for every commit
+  pull_request:
+    branches:
+      - '**'  # Run on every pull request for any branch
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
