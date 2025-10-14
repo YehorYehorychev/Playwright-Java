@@ -14,6 +14,5 @@ import org.junit.platform.suite.api.Suite;
         value = "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm," +
                 "html:target/cucumber-reports/cucumber.html"
 )
-public class CucumberRunner {
-
+public class RunCucumberTest {
 }

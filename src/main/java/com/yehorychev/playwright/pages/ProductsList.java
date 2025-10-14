@@ -15,8 +15,7 @@ public class ProductsList {
 
     @Step("Get product names")
     public List<String> getProductNames() {
-        page.waitForSelector(".card-title >> text=Adjustable Wrench", new Page.WaitForSelectorOptions().setTimeout(10000));
-
+        page.waitForSelector(".card-title", new Page.WaitForSelectorOptions().setTimeout(10000));
         page.waitForTimeout(500);
 
         List<String> names = page.locator(".card-title").allInnerTexts();
@@ -25,9 +24,29 @@ public class ProductsList {
         return names;
     }
 
+    public List<ProductSummary> getProductSummaries() {
+        page.waitForSelector("[data-test='product-name']", new Page.WaitForSelectorOptions().setTimeout(10000));
+        page.waitForTimeout(500);
+
+        List<ProductSummary> summaries = page.locator(".card").all().stream()
+                .map(productCard -> {
+                    String productName = productCard.getByTestId("product-name").textContent().strip();
+                    String productPrice = productCard.getByTestId("product-price").textContent().strip();
+                    return new ProductSummary(productName, productPrice);
+                })
+                .toList();
+
+        ScreenshotManager.takeScreenshot(page, "Captured product summaries: " + summaries);
+        return summaries;
+    }
+
     @Step("View product details for {productName}")
     public void viewProductDetails(String productName) {
         page.locator(".card").getByText(productName).click();
         ScreenshotManager.takeScreenshot(page, "Opened product details: " + productName);
+    }
+
+    public String getSearchCompletedMessage() {
+        return page.getByTestId("search_completed").textContent();
     }
 }

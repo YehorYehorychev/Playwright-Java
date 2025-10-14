@@ -53,7 +53,7 @@ public class Hooks {
         return page.get();
     }
 
-    public static BrowserContext getContext() {
+    public static BrowserContext getBrowserContext() {
         return context.get();
     }
 }
