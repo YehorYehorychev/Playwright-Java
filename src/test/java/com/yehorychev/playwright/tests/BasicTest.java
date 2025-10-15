@@ -19,7 +19,7 @@ public class BasicTest {
         public Options getOptions() {
             return new Options()
                     .setBrowserName("chromium")
-                    .setHeadless(false)
+                    .setHeadless(true)
                     .setBaseUrl("https://practicesoftwaretesting.com")
                     .setLaunchOptions(new BrowserType.LaunchOptions()
                             .setArgs(Arrays.asList("--no-sandbox", "--disable-gpu"))
